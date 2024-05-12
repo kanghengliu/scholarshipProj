@@ -10,9 +10,9 @@ Provided by DSAN Staff.
 
 ## Data Preprocessing
 
-Done in `code` folder.
+Src in `code` folder. Rendered in `doc` folder.
 
 
 ## Data Visualization
 
-Done with NextJS. Website source code in `src` folder.
+Done with NextJS. Website source code in `site` folder.
