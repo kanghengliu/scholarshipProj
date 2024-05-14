@@ -39,13 +39,18 @@ const SimpleMap = () => {
         <style jsx global>{`
             .leaflet-container {
                 background-color: transparent !important;
+                pointer-events: none;
+                cursor: none; // Ensures the cursor remains default
+            }
+            .leaflet-interactive {
+                cursor: none; // Keeps the custom cursor style unchanged over polygons
             }
         `}</style>
         <MapContainer
             center={mapCenter}
             zoom={13}
             scrollWheelZoom={false}
-            style={{ height: "800px", width: "100%" }}
+            style={{ height: "600px", width: "800px" }}
             zoomControl={false}
             dragging={false}
             doubleClickZoom={false}
@@ -60,7 +65,8 @@ const SimpleMap = () => {
                     color: 'red',
                     fillColor: '#f03',
                     fillOpacity: 0.5,
-                    weight: 5
+                    weight: 5,
+                    clickable: false,
                 })}
             />}
         </MapContainer>

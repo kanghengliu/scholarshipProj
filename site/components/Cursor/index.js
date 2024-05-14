@@ -5,27 +5,28 @@ import { useTheme } from "next-themes";
 
 const Cursor = () => {
   const theme = useTheme();
-  const [mount, setMount] = useState();
+  const [mount, setMount] = useState(false);
 
-  const getCusomColor = () => {
+  const getCustomColor = () => {
     if (theme.theme === "dark") {
-      return "#fff";
+      return "#fff";  // White cursor for dark theme
     } else if (theme.theme === "light") {
-      return "#000";
+      return "#000";  // Black cursor for light theme
     }
   };
 
   useEffect(() => {
-    setMount(true);
+    setMount(true); // Ensures component is mounted before applying custom cursor
   }, []);
+
   return (
     <>
       {mount && (
         <CustomCursor
-          targets={[".link"]}
+          targets={[".link",":not(.leaflet-interactive)"]}  // Exclude Leaflet elements
           customClass="custom-cursor"
           dimensions={30}
-          fill={getCusomColor()}
+          fill={getCustomColor()}
           smoothness={{
             movement: 0.2,
             scale: 0.1,

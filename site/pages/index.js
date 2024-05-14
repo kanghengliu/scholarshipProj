@@ -99,36 +99,38 @@ export default function Home() {
         
         <div>
           <h1> My Map </h1>
-          <MapComponent />
         </div>
-        
-        <PersistentElement>
-          <div className="bg-blue-500 text-white p-10 rounded-lg shadow-lg">
-            <h1 className="text-4xl font-bold">Central Element</h1>
+        <div className="container mx-auto max-w-4xl">
+        <PersistentElement startId="start-sticky" endId="end-sticky">
+          <div className="mx-auto text-white p-10">
+          <MapComponent />
           </div>
         </PersistentElement>
-      <div className="space-y-32">
-        <StorySection
-          title="Introduction"
-          description="This is an introduction to our data story."
-          animationEffect={{}}
-        />
-        <StorySection
-          title="Section 1"
-          description="This is the first section, highlighting important data insights."
-          animationEffect={{}}
-        />
+        </div>
+        <div className="space-y-32">
+        <div id="before-start"></div>
+        <div id="start-sticky">
+          <StorySection
+            title="Introduction"
+            description="This is an introduction to our data story."
+            />
+        </div>
+          <StorySection
+            title="Section 1"
+            description="This is the first section, highlighting important data insights."
+            />
         <StorySection
           title="Section 2"
           description="The second section provides more detailed analysis."
-          animationEffect={{}}
-        />
+          />
+          <div id="end-sticky">
         <StorySection
           title="Conclusion"
           description="Here, we conclude the data story and provide final insights."
-          animationEffect={{}}
-        />
+          />
       </div>
+
+        </div>
         <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
           <h1 className="text-2xl text-bold">Work.</h1>
 
@@ -158,13 +160,13 @@ export default function Home() {
           </div>
         </div>
         {/* This button should not go into production */}
-        {process.env.NODE_ENV === "development" && (
+        {/* {process.env.NODE_ENV === "development" && (
           <div className="fixed bottom-5 right-5">
             <Link href="/edit">
               <Button type="primary">Edit Data</Button>
             </Link>
           </div>
-        )}
+        )} */}
         <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
           <h1 className="tablet:m-10 text-2xl text-bold">About.</h1>
           <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
