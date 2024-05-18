@@ -53,7 +53,7 @@ export default function Home() {
         <div className="container mx-auto max-w-4xl">
           <PersistentElement startId="start-sticky-map" endId="end-sticky">
             <div className="mx-auto text-white p-10">
-              <MapComponent mapTriggerId="start-sticky-map" markerTriggerId="start-sticky-markers" /> {/* Pass trigger IDs */}
+              <MapComponent mapTriggerId="start-sticky-map" markerTriggerId="start-sticky-markers" vegMarkerTriggerId="start-sticky-veg-markers" /> {/* Pass trigger IDs */}
             </div>
           </PersistentElement>
         </div>
@@ -71,10 +71,12 @@ export default function Home() {
               description="This is the first section, highlighting important data insights."
             />
           </div>
-          <StorySection
-            title="Section 2"
-            description="The second section provides more detailed analysis."
-          />
+          <div id="start-sticky-veg-markers"> {/* Add the trigger ID for the veg markers */}
+            <StorySection
+              title="Section 2"
+              description="The second section provides more detailed analysis."
+            />
+          </div>
           <div id="end-sticky">
             <StorySection
               title="Conclusion"

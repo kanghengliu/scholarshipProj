@@ -5,15 +5,33 @@ import * as turf from '@turf/turf';
 import 'leaflet/dist/leaflet.css';
 
 // Custom marker component
-const CustomMarker = ({ position, idx, show, delay }) => {
+const CustomMarker = ({ position, idx, show, delay, dominant }) => {
     const map = useMap();
     const markerRef = React.useRef(null);
     const [markerVisible, setMarkerVisible] = useState(false);
 
+    // Function to get the appropriate icon URL based on the dominant property
+    const getIconUrl = (dominant) => {
+        switch (dominant) {
+            case 'Herb':
+                return '/herb.png';
+            case 'Litter':
+                return '/litter.png';
+            case 'Bare':
+                return '/bare.png';
+            case 'Shrub':
+                return '/shrub.png';
+            default:
+                return '/pin-2.png'; // Default icon if the dominant property does not match
+        }
+    };
+
     useEffect(() => {
         if (show && !markerRef.current) {
+            const iconUrl = getIconUrl(dominant);
             const markerDiv = document.createElement('div');
             markerDiv.className = 'custom-marker marker-fade-in';
+            markerDiv.style.backgroundImage = `url(${iconUrl})`;
             markerDiv.style.animationDelay = `${delay}s`;
             markerRef.current = L.marker(position, {
                 icon: L.divIcon({
@@ -35,16 +53,18 @@ const CustomMarker = ({ position, idx, show, delay }) => {
                 }, 150); // Match the duration of the fade-out animation
             }
         }
-    }, [show, map, position, delay, markerVisible]);
+    }, [show, map, position, delay, markerVisible, dominant]);
 
     return null;
 };
 
-const SimpleMap = ({ mapTriggerId, markerTriggerId }) => {
+const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId }) => {
     const [geoJsonData, setGeoJsonData] = useState(null);
     const [pointData, setPointData] = useState(null);
+    const [vegPointData, setVegPointData] = useState(null);
     const [mapCenter, setMapCenter] = useState([37.60250162758621, -110.0093977137931]); // Default center, update this based on GeoJSON
     const [showMarkers, setShowMarkers] = useState(false); // State to control marker visibility
+    const [showVegMarkers, setShowVegMarkers] = useState(false); // State to control veg marker visibility
     const [hasMapBeenTriggered, setHasMapBeenTriggered] = useState(false); // State to control map visibility once triggered
 
     useEffect(() => {
@@ -66,6 +86,16 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId }) => {
                 setPointData({ ...data, features: sortedFeatures });
             })
             .catch(error => console.error('Error loading the point data:', error));
+
+        // Fetch the veg point data
+        fetch('/history_unique_veg.geojson')
+            .then(response => response.json())
+            .then(data => {
+                // Sort point data by latitude (y-coordinate) in descending order
+                const sortedFeatures = data.features.sort((a, b) => b.geometry.coordinates[1] - a.geometry.coordinates[1]);
+                setVegPointData({ ...data, features: sortedFeatures });
+            })
+            .catch(error => console.error('Error loading the veg point data:', error));
 
         // Observe the map trigger element
         const observeMap = () => {
@@ -115,15 +145,42 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId }) => {
             }
         };
 
+        // Observe the veg marker trigger element
+        const observeVegMarkers = () => {
+            const vegMarkerElement = document.getElementById(vegMarkerTriggerId);
+            if (vegMarkerElement) {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setShowVegMarkers(true);
+                            } else {
+                                setShowVegMarkers(false);
+                            }
+                        });
+                    },
+                    { threshold: 0.5 } // Adjust this threshold as needed
+                );
+
+                observer.observe(vegMarkerElement);
+
+                return () => {
+                    observer.unobserve(vegMarkerElement);
+                };
+            }
+        };
+
         // Retry observing if the elements are not found immediately
         const mapObserverTimeout = setTimeout(observeMap, 100);
         const markerObserverTimeout = setTimeout(observeMarkers, 100);
+        const vegMarkerObserverTimeout = setTimeout(observeVegMarkers, 100);
 
         return () => {
             clearTimeout(mapObserverTimeout);
             clearTimeout(markerObserverTimeout);
+            clearTimeout(vegMarkerObserverTimeout);
         };
-    }, [mapTriggerId, markerTriggerId]);
+    }, [mapTriggerId, markerTriggerId, vegMarkerTriggerId]);
 
     // Function to calculate the centroid of the GeoJSON data
     const updateMapCenter = (geoJson) => {
@@ -146,8 +203,8 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId }) => {
                 .custom-marker {
                     width: 25px;
                     height: 41px;
-                    background: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png') no-repeat center;
                     background-size: contain;
+                    background-repeat: no-repeat;
                     opacity: 0; // Start with opacity 0
                     transform: translateY(-20px); // Start with position above
                 }
@@ -197,6 +254,16 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId }) => {
                             show={showMarkers}
                             idx={idx}
                             delay={idx * 0.015} // Delay based on index
+                        />
+                    ))}
+                    {vegPointData && vegPointData.features.map((feature, idx) => (
+                        <CustomMarker
+                            key={idx}
+                            position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+                            show={showVegMarkers}
+                            idx={idx}
+                            delay={idx * 0.015} // Delay based on index
+                            dominant={feature.properties.dominant} // Pass the dominant property
                         />
                     ))}
                 </MapContainer>
