@@ -8,6 +8,7 @@ import {
   linearGradient,
   stop,
 } from "recharts";
+import { useMediaQuery } from 'react-responsive';
 
 const CustomAreaChart = () => {
   const data = [
@@ -33,28 +34,42 @@ const CustomAreaChart = () => {
     },
   ];
 
+  // Use media queries to determine the screen size
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' });
+  const isMediumScreen = useMediaQuery({ query: '(min-width: 601px) and (max-width: 1024px)' });
+
+  // Define font sizes based on screen size
+  const tempFontSize = isSmallScreen ? '2rem' : isMediumScreen ? '3rem' : '4rem';
+  const dacadeFontSize = isSmallScreen ? '6rem' : isMediumScreen ? '7rem' : '8rem';
+
+  const containerStyle = {
+    pointerEvents: "none"
+  };
+
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" style={containerStyle}>
       <BarChart
         width={500}
         height={300}
         data={data}
         margin={{
           top: 50,
-          right: 20,
-          left: 20,
+          right: 5,
+          left: 5,
           bottom: 5,
         }}
         style={{ background: "transparent" }}
+        barSize="22.5%"
       >
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="black" stopOpacity={0} />
-            <stop offset="100%" stopColor="black" stopOpacity={1} />
+            <stop offset="0%" stopColor="black" stopOpacity={0.9} />
+            <stop offset="100%" stopColor="black" stopOpacity={0} />
           </linearGradient>
         </defs>
         <Bar dataKey="percentage" fill="url(#gradient)">
-          <LabelList dataKey="temp" position="insideTop" fill="#fff" fontSize="8rem" />
+          <LabelList dataKey="temp" position="top" fill="#fff" fontSize={tempFontSize} fontWeight="normal" />
+          <LabelList dataKey="dacade" position="insideTop" fill="rgba(255, 255, 255, 0.8)" fontSize={dacadeFontSize} fontWeight="bold" />
         </Bar>
       </BarChart>
     </ResponsiveContainer>
@@ -62,4 +77,3 @@ const CustomAreaChart = () => {
 };
 
 export default CustomAreaChart;
-

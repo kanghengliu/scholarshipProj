@@ -8,9 +8,9 @@ const Cursor = () => {
   const [mount, setMount] = useState(false);
 
   const getCustomColor = () => {
-    if (theme.theme === "dark") {
+    if (theme.systemTheme === "dark") {
       return "#fff";  // White cursor for dark theme
-    } else if (theme.theme === "light") {
+    } else if (theme.systemTheme === "light") {
       return "#000";  // Black cursor for light theme
     }
   };

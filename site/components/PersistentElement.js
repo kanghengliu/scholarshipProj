@@ -27,7 +27,7 @@ const PersistentElement = ({ children, startId, endId }) => {
 
   return (
     <div
-      className={`transition-all bg-blue-500 duration-500 pointer-events-none ${isSticky ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none size-0' : 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 cursor-none size-auto'}`}
+      className={`transition-all  duration-500 pointer-events-none ${isSticky ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none size-0' : 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 cursor-none size-auto'}`}
     >
       {children}
     </div>

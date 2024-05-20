@@ -3,6 +3,7 @@ import { MapContainer, GeoJSON, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import * as turf from '@turf/turf';
 import 'leaflet/dist/leaflet.css';
+import HeatmapLayer from './HeatmapLayer';
 
 // Custom marker component
 const CustomMarker = ({ position, idx, show, delay, dominant }) => {
@@ -58,13 +59,14 @@ const CustomMarker = ({ position, idx, show, delay, dominant }) => {
     return null;
 };
 
-const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId }) => {
+const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId, year, heatmapTriggerId }) => {
     const [geoJsonData, setGeoJsonData] = useState(null);
     const [pointData, setPointData] = useState(null);
     const [vegPointData, setVegPointData] = useState(null);
     const [mapCenter, setMapCenter] = useState([37.60250162758621, -110.0093977137931]); // Default center, update this based on GeoJSON
     const [showMarkers, setShowMarkers] = useState(false); // State to control marker visibility
     const [showVegMarkers, setShowVegMarkers] = useState(false); // State to control veg marker visibility
+    const [showHeatmap, setShowHeatmap] = useState(false);
     const [hasMapBeenTriggered, setHasMapBeenTriggered] = useState(false); // State to control map visibility once triggered
 
     useEffect(() => {
@@ -170,17 +172,44 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId }) => {
             }
         };
 
+        // Observe the heatmap trigger element
+        const observeHeatmap = () => {
+            const heatmapElement = document.getElementById(heatmapTriggerId);
+            if (heatmapElement) {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setShowHeatmap(true);
+                            } else {
+                                setShowHeatmap(false);
+                            }
+                        });
+                    },
+                    { threshold: 0.5 }
+                );
+
+                observer.observe(heatmapElement);
+
+                return () => {
+                    observer.unobserve(heatmapElement);
+                };
+            }
+        };
+
         // Retry observing if the elements are not found immediately
         const mapObserverTimeout = setTimeout(observeMap, 100);
         const markerObserverTimeout = setTimeout(observeMarkers, 100);
         const vegMarkerObserverTimeout = setTimeout(observeVegMarkers, 100);
+        const heatmapObserverTimeout = setTimeout(observeHeatmap, 100);
 
         return () => {
             clearTimeout(mapObserverTimeout);
             clearTimeout(markerObserverTimeout);
             clearTimeout(vegMarkerObserverTimeout);
+            clearTimeout(heatmapObserverTimeout);
         };
-    }, [mapTriggerId, markerTriggerId, vegMarkerTriggerId]);
+    }, [mapTriggerId, markerTriggerId, vegMarkerTriggerId, heatmapTriggerId]);
 
     // Function to calculate the centroid of the GeoJSON data
     const updateMapCenter = (geoJson) => {
@@ -212,7 +241,7 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId }) => {
                     animation: fadeIn 0.15s ease-out forwards;
                 }
                 .marker-fade-out {
-                    animation: fadeOut 0s ease-out forwards;
+                    animation: fadeOut 0ds ease-out forwards;
                 }
                 @keyframes fadeIn {
                     0% { opacity: 0; transform: translateY(-20px); }
@@ -266,6 +295,7 @@ const SimpleMap = ({ mapTriggerId, markerTriggerId, vegMarkerTriggerId }) => {
                             dominant={feature.properties.dominant} // Pass the dominant property
                         />
                     ))}
+                    <HeatmapLayer year={year} showHeatmap={showHeatmap} /> {/* Add the HeatmapLayer component */}
                 </MapContainer>
             </div>
         </>
