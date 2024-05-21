@@ -10,6 +10,7 @@
 
 body {
   @apply dark:bg-black dark:text-white;
+  background-attachment: fixed;
 }
 
 .gradient-circle {
@@ -23,8 +24,8 @@ body {
   filter: blur(40px);
   background: radial-gradient(
     circle,
-    rgba(248, 107, 223, 1) 0%,
-    rgba(107, 107, 248, 0.8) 100%
+    rgb(248, 159, 107) 0%,
+    rgba(107, 145, 248, 0.8) 100%
   );
 }
 .gradient-circle-bottom {
@@ -140,4 +141,17 @@ body {
   height: 100%;
 }
 
+/* .background-section1 {
+  background: url('/images/stat.png') no-repeat center right fixed;
+  background-size: 70vmin 100vmin;
 
+}
+.background-section1:: {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+} */

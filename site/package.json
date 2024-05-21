@@ -13,6 +13,7 @@
     "@turf/turf": "^6.5.0",
     "autoprefixer": "^10.4.7",
     "custom-cursor-react": "^1.0.5",
+    "esri-leaflet": "^3.0.12",
     "framer-motion": "^11.1.9",
     "gray-matter": "^4.0.3",
     "gsap": "^3.10.4",

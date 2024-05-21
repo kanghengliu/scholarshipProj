@@ -13,8 +13,8 @@ const StorySection = ({ title, description, animationEffect, children }) => {
         transition={{ duration: 1 }}
         {...animationEffect}
       >
-        <h2 className="text-3xl font-bold mb-4">{title}</h2>
-        <p className="text-lg mb-4">{description}</p>
+        <h2 className="text-4xl font-bold mb-4">{title}</h2>
+        <p className="text-2xl mb-4">{description}</p>
         {children && <div className="mt-4">{children}</div>}
       </motion.div>
     </div>
