@@ -22,7 +22,7 @@ const Footer = ({}) => {
         <br/>
         Source? {" "}
         <Link href="https://github.com/kanghengliu/scholarshipProj">
-          <a className="underline underline-offset-1">Github Repo (Private)</a>
+          <a className="underline underline-offset-1">Github Repo</a>
         </Link>
       </h1>
     </>

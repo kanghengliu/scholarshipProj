@@ -93,18 +93,19 @@ export default function Home() {
           </h1>
         </div>
       </div>
+      <div className="w-full flex justify-end text-white text-3xl font-bold dark:text-white"><p>NetID: kl1099</p></div>
 
       <div className="flex flex-col w-fulld mx-10 mb-10 justify-center items-center">
         <div className="background-section1 mt-10 laptop:mt-10 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">About.</h1>
+          <h1 className="tablet:m-10 text-6xl text-bold">About.</h1>
           <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
-          Climate change, characterized by rising global temperatures, altered precipitation patterns, and increased frequency of extreme weather events, profoundly impacts vegetation worldwide. These changes affect plant growth, distribution, and health, leading to shifts in ecosystems and biodiversity loss. As vegetation plays a crucial role in carbon sequestration, oxygen production, and providing habitat for wildlife, understanding these impacts is essential. Conducting research on climate change's effects on vegetation is vital to developing adaptive strategies, mitigating negative consequences, and ensuring the sustainability of ecosystems that support human life and the planet's overall health. 
+          Climate change, characterized by rising global temperatures, altered precipitation patterns, and increased frequency of extreme weather events, profoundly impacts vegetation worldwide. These changes affect plant growth, distribution, and health, leading to shifts in ecosystems and biodiversity loss. As vegetation plays a crucial role in carbon sequestration, oxygen production, and providing habitat for wildlife, understanding these impacts is essential. Conducting research on climate change&apos;s effects on vegetation is vital to developing adaptive strategies, mitigating negative consequences, and ensuring the sustainability of ecosystems that support human life and the planet&apos;s overall health. 
           <br/><br/>
-          This study will focus on Natural Bridges National Monument's collected data ranging at early as 1980 to projected data at 2024, and focus on these areas of interest.
+          This study will focus on Natural Bridges National Monument&apos;s collected data ranging at early as 1980 to projected data at 2024, and focus on these areas of interest.
           </p>
         </div>
       <div className="mt-10 laptop:mt-30 p-2 laptop:p-0">
-          <h1 className="tablet:m-10 text-2xl text-bold">Focus.</h1>
+          <h1 className="tablet:m-10 text-6xl text-bold">Focus.</h1>
           <div className="mt-5 tablet:m-10 grid grid-cols-1 laptop:grid-cols-2 gap-6">
             {data.services.map((service, index) => (
               <ServiceCard
@@ -168,7 +169,7 @@ export default function Home() {
                 />
             </div>
             <div> Move the slider to view temperature map for each year. </div>
-            <p> If you cannot see the heatmap, allow "Extract Canvas Data" in website settings, which usually resides at URL bar.</p>
+            <p> If you cannot see the heatmap, allow &quot;Extract Canvas Data&quot; in website settings, which usually resides at URL bar.</p>
             </StorySection>
             <div id="end-sticky">
               <StorySection
@@ -181,7 +182,7 @@ export default function Home() {
         
         <div className="flex flex-col w-fulld mx-10 mb-10 justify-center items-center">
         <div className="background-section1 mt-10 laptop:mt-10 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">Precipitation Trend & Volumetric Water Content.</h1>
+          <h1 className="tablet:m-10 text-6xl text-bold">Precipitation Trend & Volumetric Water Content.</h1>
           <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
           While exploring dataset, precipitation trend and volumetric water content is another pair of interesting factors we found. Below we will be plotting the precipitation trend and volumetric water content across the years, including projected data at 2024. 
           </p>
@@ -216,9 +217,12 @@ export default function Home() {
           </div>
         </div>
         <div className="background-section1 mt-10 laptop:mt-10 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">Conclusion.</h1>
+          <h1 className="tablet:m-10 text-6xl text-bold">Conclusion.</h1>
           <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
-          While exploring dataset, precipitation trend and volumetric water content is another pair of interesting factors we found. Below we will be plotting the precipitation trend and volumetric water content across the years, including projected data at 2024. 
+
+          In conclusion, the data from Natural Bridges National Monument highlights significant trends and correlations between climate change and vegetation dynamics. We observed that rising temperatures are associated with reduced vegetation coverage, while shifts in precipitation patterns have created more volatile and unpredictable conditions for plant life. These findings underscore the critical impact of climate change on natural ecosystems, emphasizing the need for ongoing research and adaptive management strategies to preserve biodiversity and ecosystem health.
+          <br/><br/>
+          By analyzing long-term data and projecting future conditions, this study provides valuable insights into how climate change may continue to shape vegetation patterns. Understanding these changes enables us to develop more effective conservation efforts and policy decisions, ensuring that natural landscapes like Natural Bridges National Monument can withstand and adapt to the challenges posed by a changing climate.
           </p>
         </div> 
       </div>
