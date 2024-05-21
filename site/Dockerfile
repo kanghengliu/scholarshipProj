@@ -1,27 +1,23 @@
-# Use the official Node.js 16 image.
-# https://hub.docker.com/_/node
+# Use the official Node.js image as the base image
 FROM node:21-alpine
 
-# Create and change to the app directory.
-WORKDIR /usr/src/app
+# Set the working directory inside the container
+WORKDIR /app
 
-# Copy package.json, package-lock.json, and next.config.js if you have one.
-COPY package*.json ./
+# Copy package.json and yarn.lock files
+COPY package.json yarn.lock ./
 
-# Install production dependencies.
-RUN npm install
+# Install dependencies
+RUN yarn install
 
-# Copy local code to the container image.
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the application.
-RUN npm run build
+# Build the Next.js application
+RUN yarn build
 
-# Run the web service on container startup using a non-root user.
-USER node
-
-# Next.js starts on port 3000. Use the EXPOSE instruction to have it mapped by the docker daemon:
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Run the web service on container startup.
-CMD ["npm", "start"]
+# Start the Next.js application
+CMD ["yarn", "start"]
