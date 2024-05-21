@@ -93,7 +93,7 @@ export default function Home() {
           </h1>
         </div>
       </div>
-      <div className="w-full flex justify-end text-white text-3xl font-bold dark:text-white"><p>NetID: kl1099</p></div>
+      <div className="w-full flex justify-end text-black text-3xl font-bold dark:text-white"><p>NetID: kl1099</p></div>
 
       <div className="flex flex-col w-fulld mx-10 mb-10 justify-center items-center">
         <div className="background-section1 mt-10 laptop:mt-10 p-2 laptop:p-0" ref={aboutRef}>
